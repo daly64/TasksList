@@ -7,26 +7,30 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.alphadaly.taskslist.application.controllers.TasksController
+import com.alphadaly.taskslist.application.models.Task
 import com.alphadaly.taskslist.ui.theme.*
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun TaskCard(text: String) {
+fun TaskCard(task: Task) {
 
     val openDialog = remember { mutableStateOf(false) }
-    AlertDialogBox("Delete this task ?", openDialog)
+    val tasksController = TasksController(LocalContext.current)
+    AlertDialogBox("Delete this task ?", openDialog) { tasksController.deleteTask(task) }
 
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
     val sizePx = with(LocalDensity.current) { 48.dp.toPx() }
     val anchors = mapOf(0f to 0, sizePx to 1)
-    val swipeableState = rememberSwipeableState(0)
+    val swipeableState = rememberSwipeableState(if (task.done) 1 else 0)
 
     val swipeable = Modifier
         .swipeable(
@@ -51,7 +55,7 @@ fun TaskCard(text: String) {
         ) {
             Text(
                 maxLines = 1,
-                text = text,
+                text = task.text,
                 fontFamily = robotoRegular,
                 fontSize = 18.sp,
                 letterSpacing = .38.sp,
@@ -81,5 +85,5 @@ fun TaskCard(text: String) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewTaskCard() {
-    TaskCard(text = "task text")
+    TaskCard(Task())
 }

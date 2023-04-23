@@ -19,7 +19,11 @@ import com.alphadaly.taskslist.ui.theme.text_color1
 import com.alphadaly.taskslist.ui.theme.text_color2
 
 @Composable
-fun AlertDialogBox(DialogText: String, openDialog: MutableState<Boolean>) {
+fun AlertDialogBox(
+    DialogText: String,
+    openDialog: MutableState<Boolean>,
+    onConfirm: () -> Unit,
+) {
     val context = LocalContext.current
 //    val openDialog = remember { mutableStateOf(true) }
 
@@ -39,6 +43,7 @@ fun AlertDialogBox(DialogText: String, openDialog: MutableState<Boolean>) {
             confirmButton = {
 
                 TextButton(onClick = {
+                    onConfirm()
                     openDialog.value = false
                     Toast.makeText(context, "Yes Button Click", Toast.LENGTH_SHORT).show()
                 }) {
@@ -73,5 +78,5 @@ fun AlertDialogBox(DialogText: String, openDialog: MutableState<Boolean>) {
 @Composable
 fun PreviewAlertDialogBox() {
     val openDialog = remember { mutableStateOf(true) }
-    AlertDialogBox("Delete this task ?", openDialog)
+    AlertDialogBox("Delete this task ?", openDialog) {}
 }

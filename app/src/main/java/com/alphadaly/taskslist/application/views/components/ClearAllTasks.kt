@@ -22,7 +22,7 @@ import com.alphadaly.taskslist.ui.theme.text_color2
 @Composable
 fun ClearAllTasks() {
     val openDialog = remember { mutableStateOf(false) }
-    AlertDialogBox("Delete all tasks ?", openDialog)
+    AlertDialogBox("Delete all tasks ?", openDialog) {}
     Row(
         modifier = Modifier
             .fillMaxWidth()
