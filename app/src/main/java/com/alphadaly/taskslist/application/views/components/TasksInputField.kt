@@ -18,11 +18,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.alphadaly.taskslist.application.controllers.TasksController
-import com.alphadaly.taskslist.application.models.Task
 import com.alphadaly.taskslist.ui.theme.addIcon
 import com.alphadaly.taskslist.ui.theme.main_color
 import com.alphadaly.taskslist.ui.theme.task_placeholder_text
@@ -30,9 +27,6 @@ import com.alphadaly.taskslist.ui.theme.task_placeholder_text
 @Composable
 fun TasksInputField() {
     var textValue by remember { mutableStateOf("") }
-
-    val tasksController = TasksController(LocalContext.current)
-    fun createTask() = tasksController.createTask(Task(-1, textValue, false))
 
     Row(
         Modifier
@@ -53,7 +47,7 @@ fun TasksInputField() {
                 .height(52.dp)
                 .fillMaxWidth(.7f),
             colors = buttonColors(main_color),
-            onClick = { createTask() },
+            onClick = {},
         ) {
             Icon(
                 imageVector = addIcon,

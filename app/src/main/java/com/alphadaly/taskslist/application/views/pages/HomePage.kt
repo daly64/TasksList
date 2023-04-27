@@ -13,6 +13,8 @@ import com.alphadaly.taskslist.application.views.components.TasksList
 fun HomePage() {
     /*
            */
+
+
     Column(verticalArrangement = Arrangement.SpaceAround) {
         ApplicationTitle()
         TasksInputField()
