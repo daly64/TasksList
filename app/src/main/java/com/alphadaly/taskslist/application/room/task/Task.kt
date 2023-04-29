@@ -1,14 +1,14 @@
-package com.alphadaly.taskslist.application.data
+package com.alphadaly.taskslist.application.room.task
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "tasks")
 data class Task(
+    var text: String,
+    var done: Boolean,
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
-    val text: String,
-    val done: Boolean
+    val id: Int=0,
 )
 
 

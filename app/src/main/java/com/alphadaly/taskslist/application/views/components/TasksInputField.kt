@@ -18,8 +18,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.alphadaly.taskslist.application.room.TaskEvent
 import com.alphadaly.taskslist.ui.theme.addIcon
 import com.alphadaly.taskslist.ui.theme.main_color
 import com.alphadaly.taskslist.ui.theme.task_placeholder_text
@@ -27,6 +29,10 @@ import com.alphadaly.taskslist.ui.theme.task_placeholder_text
 @Composable
 fun TasksInputField() {
     var textValue by remember { mutableStateOf("") }
+
+    val context = LocalContext.current
+//    val state by TaskData(context).viewModel.state.collectAsState()
+    val onEvent = TaskData(context).viewModel::onEvent
 
     Row(
         Modifier
@@ -38,7 +44,10 @@ fun TasksInputField() {
         OutlinedTextField(
             singleLine = true,
             value = textValue,
-            onValueChange = { textValue = it },
+            onValueChange = {
+                textValue = it
+                onEvent(TaskEvent.SetText(textValue))
+            },
             placeholder = {
                 Text(text = task_placeholder_text)
             })
@@ -47,7 +56,7 @@ fun TasksInputField() {
                 .height(52.dp)
                 .fillMaxWidth(.7f),
             colors = buttonColors(main_color),
-            onClick = {},
+            onClick = { onEvent(TaskEvent.SaveTask) },
         ) {
             Icon(
                 imageVector = addIcon,

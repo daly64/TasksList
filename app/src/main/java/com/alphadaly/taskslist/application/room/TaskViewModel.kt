@@ -1,0 +1,61 @@
+package com.alphadaly.taskslist.application.room
+
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.alphadaly.taskslist.application.room.task.Task
+import com.alphadaly.taskslist.application.room.task.TaskDAO
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+
+class TaskViewModel(private val dao: TaskDAO) : ViewModel() {
+
+
+    private val _tasks = dao.getAll()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+
+    private val _state = MutableStateFlow(TaskState())
+    val state = combine(_state, _tasks) { state, tasks ->
+        state.copy(tasks = tasks)
+    }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), TaskState())
+
+
+    fun onEvent(event: TaskEvent) {
+        when (event) {
+            TaskEvent.SaveTask -> {
+                val text = state.value.text
+                val done = state.value.done
+                if (text.isNotBlank()) {
+                    val task = Task(text = text, done = done)
+                    viewModelScope.launch { dao.upsertTask(task) }
+                    _state.update { it.copy(isDeletingTask = false, text = "", done = false) }
+                }
+            }
+
+            is TaskEvent.DeleteTask -> {
+                viewModelScope.launch { dao.deleteTask(event.task) }
+            }
+
+            TaskEvent.ShowDialog -> _state.update { it.copy(isDeletingTask = true) }
+            TaskEvent.HideDialog -> _state.update { it.copy(isDeletingTask = false) }
+            is TaskEvent.SetDone -> {
+                _state.update { it.copy(done = event.done) }
+            }
+
+            is TaskEvent.SetText -> {
+                _state.update { it.copy(text = event.text) }
+            }
+
+            TaskEvent.DeleteAll -> {
+                viewModelScope.launch { dao.deleteAll() }
+            }
+        }
+
+    }
+}
+

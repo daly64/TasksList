@@ -1,46 +1,45 @@
 package com.alphadaly.taskslist.application.views.components
 
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.interaction.*
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.Card
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.alphadaly.taskslist.ui.theme.*
+import com.alphadaly.taskslist.application.room.task.Task
+import com.alphadaly.taskslist.ui.theme.card_background_color
+import com.alphadaly.taskslist.ui.theme.deleteIcon
+import com.alphadaly.taskslist.ui.theme.robotoRegular
+import com.alphadaly.taskslist.ui.theme.text_color1
+import com.alphadaly.taskslist.ui.theme.text_color2
 
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun TaskCard(text: String) {
+fun TaskCard(task: Task) {
+
 
     val openDialog = remember { mutableStateOf(false) }
     AlertDialogBox("Delete this task ?", openDialog) { }
 
-    val interactionSource = remember { MutableInteractionSource() }
-    val isPressed by interactionSource.collectIsPressedAsState()
-    val sizePx = with(LocalDensity.current) { 48.dp.toPx() }
-    val anchors = mapOf(0f to 0, sizePx to 1)
-    val swipeableState = rememberSwipeableState(0)
-
-    val swipeable = Modifier
-        .swipeable(
-            state = swipeableState,
-            anchors = anchors,
-            thresholds = { _, _ -> FractionalThreshold(0.3f) },
-            orientation = Orientation.Horizontal
-        )
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(20.dp, 7.dp)
-            .height(52.dp)
-            .then(swipeable),
+            .height(52.dp),
         backgroundColor = card_background_color,
         elevation = 10.dp
     ) {
@@ -50,24 +49,27 @@ fun TaskCard(text: String) {
             modifier = Modifier.padding(20.dp, 0.dp, 0.dp, 0.dp)
         ) {
             Text(
+                modifier = Modifier.clickable {
+
+                },
                 maxLines = 1,
-                text = text,
+                text = task.text,
                 fontFamily = robotoRegular,
                 fontSize = 18.sp,
                 letterSpacing = .38.sp,
-                color = if (swipeableState.currentValue == 0) text_color1 else text_color2,
-                textDecoration = if (swipeableState.currentValue == 0) TextDecoration.None else TextDecoration.LineThrough
+                color = if (task.done) text_color2 else text_color1,
+                textDecoration = if (task.done) TextDecoration.LineThrough else TextDecoration.None
 
             )
 
-            IconButton(onClick = { openDialog.value = true }, interactionSource = interactionSource)
+            IconButton(onClick = { openDialog.value = true })
             {
                 Icon(
                     modifier = Modifier
                         .size(32.dp),
                     imageVector = deleteIcon,
                     contentDescription = null,
-                    tint = if (isPressed) main_color else text_color2
+                    tint = text_color2
                 )
             }
         }
@@ -81,5 +83,6 @@ fun TaskCard(text: String) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewTaskCard() {
-    TaskCard("task")
+    val task = Task("", false)
+    TaskCard(task)
 }
