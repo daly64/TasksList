@@ -1,5 +1,6 @@
 package com.alphadaly.taskslist
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -8,6 +9,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
+import com.alphadaly.taskslist.application.FullScreen
+import com.alphadaly.taskslist.application.LockScreenOrientation
 import com.alphadaly.taskslist.application.navigation.SetupNavGraph
 import com.alphadaly.taskslist.application.room.TaskViewModel
 import com.alphadaly.taskslist.application.room.task.TaskDatabase
@@ -38,6 +41,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
 //            HomePage()
+            FullScreen()
+            LockScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
             val navController = rememberNavController()
             SetupNavGraph(navController = navController,viewModel)

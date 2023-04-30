@@ -63,8 +63,7 @@ fun TaskCard(task: Task, onEvent: (event: TaskEvent) -> Unit) {
             Text(
                 modifier = Modifier.clickable {
                     task.done = !task.done
-                    onEvent(TaskEvent.SetDone(task.done))
-                    onEvent(TaskEvent.SaveTask)
+                    onEvent(TaskEvent.UpdateTask(task))
                 },
                 maxLines = 1,
                 text = task.text,

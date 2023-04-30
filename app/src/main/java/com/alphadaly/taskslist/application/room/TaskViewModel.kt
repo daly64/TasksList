@@ -34,18 +34,11 @@ class TaskViewModel(private val dao: TaskDAO) : ViewModel() {
                 val done = state.value.done
                 if (text.isNotBlank()) {
 
-
                     val task = Task(text = text, done = done)
                     viewModelScope.launch {
                         dao.upsertTask(task)
                     }
-                    _state.update {
-                        it.copy(
-                            isDeletingTask = false,
-                            text = "",
-                            done = false
-                        )
-                    }
+                    _state.update { it.copy(isDeletingTask = false, text = "", done = false) }
 
 
                 }
@@ -70,7 +63,35 @@ class TaskViewModel(private val dao: TaskDAO) : ViewModel() {
                 viewModelScope.launch { dao.deleteAll() }
             }
 
+            is TaskEvent.CreateTask -> {
+                if (event.task.text.isNotBlank()) {
 
+                    viewModelScope.launch {
+                        dao.insertTask(event.task)
+                    }
+                    _state.update { it.copy(isDeletingTask = false, text = "", done = false) }
+
+
+                }
+            }
+
+            is TaskEvent.UpdateTask -> {
+                if (event.task.text.isNotBlank()) {
+
+                    viewModelScope.launch {
+                        dao.updateTask(event.task)
+                    }
+                    _state.update {
+                        it.copy(
+                            isDeletingTask = false,
+                            text = event.task.text,
+                            done = event.task.done
+                        )
+                    }
+
+
+                }
+            }
         }
 
     }
