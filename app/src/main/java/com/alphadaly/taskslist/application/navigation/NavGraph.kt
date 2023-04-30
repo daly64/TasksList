@@ -4,12 +4,13 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.alphadaly.taskslist.application.room.TaskViewModel
 import com.alphadaly.taskslist.application.views.pages.AnimatedSplashScreen
 import com.alphadaly.taskslist.application.views.pages.HomePage
 
 
 @Composable
-fun SetupNavGraph(navController: NavHostController) {
+fun SetupNavGraph(navController: NavHostController, viewModel: TaskViewModel) {
     NavHost(
         navController = navController,
         startDestination = Screen.Splash.route
@@ -18,7 +19,7 @@ fun SetupNavGraph(navController: NavHostController) {
             AnimatedSplashScreen(navController = navController)
         }
         composable(route = Screen.Home.route) {
-            HomePage()
+            HomePage(viewModel)
         }
     }
 }

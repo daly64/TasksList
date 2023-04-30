@@ -49,13 +49,9 @@ android {
 
 dependencies {
 
-    // Room persistence library
-    implementation "androidx.room:room-runtime:2.5.1"
-    annotationProcessor "androidx.room:room-compiler:2.5.1"
-    // to use kotlin annotation processing tool (kapt)
-    kapt "androidx.room:room-compiler:2.5.1"
-    // support kotlin extensions and coroutines (e.g. flow)
+    // Room
     implementation "androidx.room:room-ktx:2.5.1"
+    kapt "androidx.room:room-compiler:2.5.1"
 
     //    icons extended
     implementation "androidx.compose.material:material-icons-extended:1.4.2"

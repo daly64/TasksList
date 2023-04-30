@@ -15,27 +15,42 @@ import kotlinx.coroutines.launch
 class TaskViewModel(private val dao: TaskDAO) : ViewModel() {
 
 
-    private val _tasks = dao.getAll()
+    private var _tasks = dao.getAll()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
-    private val _state = MutableStateFlow(TaskState())
-    val state = combine(_state, _tasks) { state, tasks ->
+    private var _state = MutableStateFlow(TaskState())
+
+    var state = combine(_state, _tasks) { state, tasks ->
         state.copy(tasks = tasks)
     }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), TaskState())
+        .stateIn(viewModelScope, SharingStarted.Eagerly, TaskState())
 
 
     fun onEvent(event: TaskEvent) {
         when (event) {
-            TaskEvent.SaveTask -> {
+            is TaskEvent.SaveTask -> {
+
                 val text = state.value.text
                 val done = state.value.done
                 if (text.isNotBlank()) {
+
+
                     val task = Task(text = text, done = done)
-                    viewModelScope.launch { dao.upsertTask(task) }
-                    _state.update { it.copy(isDeletingTask = false, text = "", done = false) }
+                    viewModelScope.launch {
+                        dao.upsertTask(task)
+                    }
+                    _state.update {
+                        it.copy(
+                            isDeletingTask = false,
+                            text = "",
+                            done = false
+                        )
+                    }
+
+
                 }
             }
+
 
             is TaskEvent.DeleteTask -> {
                 viewModelScope.launch { dao.deleteTask(event.task) }
@@ -54,6 +69,8 @@ class TaskViewModel(private val dao: TaskDAO) : ViewModel() {
             TaskEvent.DeleteAll -> {
                 viewModelScope.launch { dao.deleteAll() }
             }
+
+
         }
 
     }

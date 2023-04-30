@@ -15,14 +15,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.alphadaly.taskslist.application.room.TaskEvent
+import com.alphadaly.taskslist.application.room.TaskState
 import com.alphadaly.taskslist.ui.theme.robotoRegular
 import com.alphadaly.taskslist.ui.theme.text_color2
 
 
 @Composable
-fun ClearAllTasks() {
+fun ClearAllTasks(state: TaskState, onEvent: (event: TaskEvent) -> Unit) {
     val openDialog = remember { mutableStateOf(false) }
-    AlertDialogBox("Delete all tasks ?", openDialog) {}
+    AlertDialogBox("Delete all tasks ?", openDialog, onEvent) {}
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -32,13 +34,13 @@ fun ClearAllTasks() {
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         Text(
-            text = "you have 004 pending tasks",
+            text = "you have ${state.tasks.size} pending tasks",
             fontFamily = robotoRegular,
             fontSize = 18.sp,
             letterSpacing = .38.sp,
             color = text_color2
         )
-        TextButton(onClick = {openDialog.value = true }) {
+        TextButton(onClick = { openDialog.value = true }) {
             Text(text = "CLEAR ALL")
         }
     }
@@ -47,5 +49,6 @@ fun ClearAllTasks() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewClearAllTasks() {
-    ClearAllTasks()
+    val state = TaskState()
+    ClearAllTasks(state) { }
 }
