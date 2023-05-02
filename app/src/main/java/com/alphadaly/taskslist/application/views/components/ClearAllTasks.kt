@@ -50,5 +50,5 @@ fun ClearAllTasks(state: TaskState, onEvent: (event: TaskEvent) -> Unit) {
 @Composable
 fun PreviewClearAllTasks() {
     val state = TaskState()
-    ClearAllTasks(state) { }
+//    ClearAllTasks(state) { }
 }

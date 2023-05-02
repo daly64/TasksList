@@ -1,24 +1,20 @@
 package com.alphadaly.taskslist
 
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
-import com.alphadaly.taskslist.application.FullScreen
-import com.alphadaly.taskslist.application.LockScreenOrientation
-import com.alphadaly.taskslist.application.navigation.SetupNavGraph
 import com.alphadaly.taskslist.application.room.TaskViewModel
 import com.alphadaly.taskslist.application.room.task.TaskDatabase
+import com.alphadaly.taskslist.application.views.pages.HomePage
 
 
 class MainActivity : ComponentActivity() {
 
-     val db by lazy {
+    val db by lazy {
         Room.databaseBuilder(
             applicationContext,
             TaskDatabase::class.java,
@@ -31,21 +27,21 @@ class MainActivity : ComponentActivity() {
         factoryProducer = {
             object : ViewModelProvider.Factory {
                 override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    return TaskViewModel(db.dao) as T
+                    return TaskViewModel(db.taskDao) as T
                 }
             }
         }
     )
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
-//            HomePage()
-            FullScreen()
-            LockScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
-            val navController = rememberNavController()
-            SetupNavGraph(navController = navController,viewModel)
+            HomePage(viewModel)
+            /*            val navController = rememberNavController()
+                        SetupNavGraph(navController = navController,viewModel)*/
         }
     }
 }

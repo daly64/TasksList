@@ -36,7 +36,7 @@ class TaskViewModel(private val dao: TaskDAO) : ViewModel() {
 
                     val task = Task(text = text, done = done)
                     viewModelScope.launch {
-                        dao.upsertTask(task)
+                        dao.insertTask(task)
                     }
                     _state.update { it.copy(isDeletingTask = false, text = "", done = false) }
 

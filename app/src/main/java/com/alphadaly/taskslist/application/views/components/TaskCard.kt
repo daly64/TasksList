@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
@@ -34,7 +33,6 @@ import com.alphadaly.taskslist.ui.theme.text_color1
 import com.alphadaly.taskslist.ui.theme.text_color2
 
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TaskCard(task: Task, onEvent: (event: TaskEvent) -> Unit) {
 
@@ -100,5 +98,5 @@ fun TaskCard(task: Task, onEvent: (event: TaskEvent) -> Unit) {
 @Composable
 fun PreviewTaskCard() {
     val task = Task("", false)
-    TaskCard(task) { }
+//    TaskCard(task) { }
 }

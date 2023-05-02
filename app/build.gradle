@@ -51,7 +51,6 @@ dependencies {
 
     // system bars customization
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.28.0"
-
     // Room
     implementation "androidx.room:room-ktx:2.5.1"
     kapt "androidx.room:room-compiler:2.5.1"

@@ -26,7 +26,7 @@ fun AlertDialogBox(
     task: Task = Task("", false),
     onConfirm: () -> Unit,
 ) {
-//    val openDialog = remember { mutableStateOf(true) }
+
 
     if (openDialog.value) {
         AlertDialog(
@@ -46,7 +46,6 @@ fun AlertDialogBox(
                 TextButton(onClick = {
                     onConfirm()
                     openDialog.value = false
-//                    Toast.makeText(context, "Yes Button Click", Toast.LENGTH_SHORT).show()
                     if (DialogText == "Delete this task ?") {
                         onEvent(TaskEvent.DeleteTask(task))
                     }
@@ -68,7 +67,6 @@ fun AlertDialogBox(
             dismissButton = {
                 TextButton(onClick = {
                     openDialog.value = false
-//                    Toast.makeText(context, "No Button Click", Toast.LENGTH_SHORT).show()
                 }) {
                     Text(
                         text = "No",
@@ -88,5 +86,5 @@ fun AlertDialogBox(
 fun PreviewAlertDialogBox() {
     val openDialog = remember { mutableStateOf(true) }
     val task = Task("", false)
-    AlertDialogBox("Delete this task ?", openDialog, { }, task) {}
+//    AlertDialogBox("Delete this task ?", openDialog, { }, task) {}
 }

@@ -26,12 +26,12 @@ fun TasksList(state: TaskState, onEvent: (event: TaskEvent) -> Unit) {
             .fillMaxWidth()
             .fillMaxHeight(.85f),
     ) {
-        items(state.tasks) { task -> TaskCard(task,onEvent) }
+        items(state.tasks.reversed()) { task -> TaskCard(task, onEvent) }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun PreviewTasksList() {
-    TasksList(TaskState()) { }
+//    TasksList(TaskState()) { }
 }
