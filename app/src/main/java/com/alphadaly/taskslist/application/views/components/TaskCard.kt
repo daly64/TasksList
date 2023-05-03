@@ -23,8 +23,8 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.alphadaly.taskslist.application.room.TaskEvent
-import com.alphadaly.taskslist.application.room.task.Task
+import com.alphadaly.taskslist.application.data.TaskEvent
+import com.alphadaly.taskslist.application.data.task.Task
 import com.alphadaly.taskslist.ui.theme.card_background_color
 import com.alphadaly.taskslist.ui.theme.deleteIcon
 import com.alphadaly.taskslist.ui.theme.main_color
@@ -98,5 +98,5 @@ fun TaskCard(task: Task, onEvent: (event: TaskEvent) -> Unit) {
 @Composable
 fun PreviewTaskCard() {
     val task = Task("", false)
-//    TaskCard(task) { }
+    TaskCard(task) { }
 }

@@ -1,4 +1,4 @@
-package com.alphadaly.taskslist.application.room.task
+package com.alphadaly.taskslist.application.data.task
 
 import androidx.room.Dao
 import androidx.room.Delete

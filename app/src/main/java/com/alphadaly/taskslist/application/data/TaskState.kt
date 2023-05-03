@@ -1,6 +1,6 @@
-package com.alphadaly.taskslist.application.room
+package com.alphadaly.taskslist.application.data
 
-import com.alphadaly.taskslist.application.room.task.Task
+import com.alphadaly.taskslist.application.data.task.Task
 
 data class TaskState(
     var tasks: List<Task> = emptyList(),

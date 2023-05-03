@@ -1,4 +1,4 @@
-package com.alphadaly.taskslist.application.room.task
+package com.alphadaly.taskslist.application.data.task
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

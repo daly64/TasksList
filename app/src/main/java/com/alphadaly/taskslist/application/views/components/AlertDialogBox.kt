@@ -10,8 +10,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import com.alphadaly.taskslist.application.room.TaskEvent
-import com.alphadaly.taskslist.application.room.task.Task
+import com.alphadaly.taskslist.application.data.TaskEvent
+import com.alphadaly.taskslist.application.data.task.Task
 import com.alphadaly.taskslist.ui.theme.main_color
 import com.alphadaly.taskslist.ui.theme.robotoMedium
 import com.alphadaly.taskslist.ui.theme.robotoRegular
@@ -86,5 +86,5 @@ fun AlertDialogBox(
 fun PreviewAlertDialogBox() {
     val openDialog = remember { mutableStateOf(true) }
     val task = Task("", false)
-//    AlertDialogBox("Delete this task ?", openDialog, { }, task) {}
+    AlertDialogBox("Delete this task ?", openDialog, { }, task) {}
 }

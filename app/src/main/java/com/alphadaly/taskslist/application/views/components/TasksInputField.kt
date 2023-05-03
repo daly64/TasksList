@@ -22,7 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.alphadaly.taskslist.application.room.TaskEvent
+import com.alphadaly.taskslist.application.data.TaskEvent
 import com.alphadaly.taskslist.ui.theme.addIcon
 import com.alphadaly.taskslist.ui.theme.main_color
 import com.alphadaly.taskslist.ui.theme.task_placeholder_text

@@ -1,10 +1,10 @@
-package com.alphadaly.taskslist.application.room
+package com.alphadaly.taskslist.application.data
 
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.alphadaly.taskslist.application.room.task.Task
-import com.alphadaly.taskslist.application.room.task.TaskDAO
+import com.alphadaly.taskslist.application.data.task.Task
+import com.alphadaly.taskslist.application.data.task.TaskDAO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
